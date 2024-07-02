@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>PeaceRep</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.0.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.0.0/mapbox-gl.js"></script>
+    <script src='https://unpkg.com/@turf/turf@6/turf.min.js'></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="icon" type="image/png" href="img/peace.png">
+    <script src="js/d3.js" type="text/javascript"></script>
+    <script src="js/countries.js"></script>
+</head>
+
+<body>
+    <div id="header">
+        <img id="title_img" src="img/logo.png" alt="PeaceRep Logo" />
+        <img id="local_img" src="img/local.svg" alt="PeaceRep Local Logo" />
+        <h1 id="big_title">PA-X Local Agreements</h1>
+        <button id="refresh_button" title="Reset"><i class="fa fa-refresh"></i></button>
+        <button title="Information" id="info_button"><i class="fa fa-info"></i></button>
+        <button title="Codebook" id="code_button"><i class="fa fa-book"></i></button>
+    </div>
+
+    <div id="info">
+        <div id="info_title_div">
+            <h3>Information</h3>
+        </div>
+        <div id="info_content">
+            This database lists all agreements included on the main PA-X database that deal in some way with local
+            issues, involve local actors, and deal with forms of local/communal violent conflict. Agreements span the
+            1990 to 2024, with global coverage, forming a collection of 349 local agreements, 5 of which are new in this
+            release of PA-X Local. PA-X Local only includes agreements for which we could obtain a text and is therefore
+            neither exhaustive of all local negotiation practices, nor clearly representative of them, nor of the range
+            of armed actors and groups involved in local agreement-making. While it is likely to therefore reflect some
+            processes more than others, it forms a useful qualitative tool for beginning to understand local processes
+            and is the only database that we know of to currently do this.
+            </br>
+            </br>
+            If you are interested in how we selected documents and made decisions on coding,
+            see our <a id="first_link" target="_blank"
+                href="https://pax.peaceagreements.org/media/documents/about_pax_local_v8.pdf">About PA-X
+                Local</a>
+            document (also available in <a id="first_link" target="_blank"
+                href="https://pax.peaceagreements.org/media/documents/about_pax_local_v8_arabic.pdf">Arabic</a>
+            and <a id="first_link" target="_blank"
+                href="https://pax.peaceagreements.org/media/documents/about_pax_local_v8_french.pdf">French</a>).
+            </br>
+            </br>
+            See also the <a id="first_link" target="_blank"
+                href="https://pax.peaceagreements.org/media/documents/Definitions_local_v8.pdf">local agreements
+                glossary/definitions</a>,
+            <a id="first_link" target="_blank"
+                href="https://pax.peaceagreements.org/media/documents/PA_X_codebook_local_v8.pdf">codebook</a>,
+            and
+            <a id="first_link" target="_blank"
+                href="https://pax.peaceagreements.org/media/documents/Terms_of_Use_local.pdf">terms of use</a>.
+            <br>
+            <br>
+            <p>Credits: <br> Data Preparation by Niamh Henry, University of Edinburgh
+                <br>Vizualization by Tomas Vancisin, University of Edinburgh <br><br>
+                Data Citation:<br> Bell, Christine, Sanja Badanjak, Laura Wise, Monalisa Adhikari,
+                Juline Beaujouan, Margherita Distrotti, Tim Epple, Robert Forster, Robert Wilson, and Laura Wise (2024).
+                PA-X Local Peace Agreements Database and Dataset, Version 5.
+                <a id="first_link" target="_blank" href="https://pax.peaceagreements.org/agreements/lsearch">Link</a>.
+            </p>
+        </div>
+    </div>
+
+    <div id="codebook"><iframe src="https://pax.peaceagreements.org/media/documents/PA_X_codebook_local_v8.pdf"
+            title="Iframe Example"></iframe></div>
+
+    <div id="map"></div>
+
+    <div id="description"></div>
+
+    <div id="timeline_description"></div>
+
+    <div id="peace_process">
+        <h3 id="peace_title"></h3>
+        <div id="peace_title_div" class="third">
+            <div id="process_stage"></div>
+            <div id="locale"></div>
+            <div id="agreement"></div>
+            <div id="desc"></div>
+        </div>
+        <h3 id="time_title" style="text-align: center;">Timeline</h3>
+        <div id="timelines" class="third">
+            <!-- <div id="timeline_buttons">
+                <button id="bee_time_btn" title="switch"><i class="fa fa-arrows-h" aria-hidden="true"></i></button>
+            </div> -->
+            <div id="timeline"></div>
+            <div id="chart"></div>
+        </div>
+        <div id="links">
+            <div class="box" id="box1">
+                <div id="krava">
+                    <a id="linkie" target="_blank" href=""><img src="img/agt_icon.svg" id="first_img"
+                            alt="HTML tutorial"></a>
+                    <p id="img_text">View PDF</p>
+                </div>
+            </div>
+            <div class="box" id="box2">
+                <div id="krava">
+                    <a id="linkie1" target="_blank" href=""><img src="img/peace_circle.svg" id="second_img"
+                            alt="HTML tutorial"></a>
+                    <p id="img_text">PA-X</p>
+                </div>
+            </div>
+            <div class="box" id="box3">
+                <div id="krava">
+                    <a id="linkie2" target="_blank" href=""><img src="img/local.svg" id="third_img"
+                            alt="HTML tutorial"></a>
+                    <p id="img_text">PA-X Local</p>
+                </div>
+            </div>
+            <div class="box" id="box4">
+                <div id="krava">
+                    <a id="linkie3" target="_blank" href=""><img src="img/search.svg" id="four_img"
+                            alt="HTML tutorial"></a>
+                    <p id="img_text">Search PA-X</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button id="filter_button">Filter</button>
+
+    <div id="filters">
+        <div id="info_title_div">
+            <h3>Filter by Local Issues</h4>
+        </div>
+        <div class="filter_local">
+            <form>
+                <label id="lbl">
+                    <input type="radio" name="colors" class="radio" id="nat">Link to National Process
+                    <span style="padding: 5px;" class="tooltiptext">Documented link to a national-level peace process,
+                        either specifically mentioned in the agreement text, or if secondary
+                        literature indicates a clear structural relationship to a national-level
+                        peace process.</span>
+                </label>
+                <label id="lbl">
+                    <input type="radio" name="colors" class="radio" id="rit">Ritual/Prayer
+                    <span style="padding: 5px;" class="tooltiptext">Agreement documents contain any references to
+                        ritual,
+                        religion, and prayer, including scripture (Quranic, from the Hadith, Biblical)
+                        and invocations of God.</span>
+                </label>
+                <label id="lbl">
+                    <input type="radio" name="colors" class="radio" id="gri">Grievance
+                    <span style="padding: 5px;" class="tooltiptext">Agreement documents list any grievances that are
+                        being
+                        addressed in the community and/or how those grievances are being addressed.</span>
+                </label>
+                <label id="lbl">
+                    <input type="radio" name="colors" class="radio" id="cat">Cattle Rustling
+                    <span style="padding: 5px;" class="tooltiptext">Agreement documents contain any references to cattle
+                        rustling /
+                        banditry / theft of livestock, even if covered in the grievance list.</span>
+                </label>
+                <label id="lbl">
+                    <input type="radio" name="colors" class="radio" id="cov">Social Cover
+                    <span style="padding: 5px;" class="tooltiptext">Agreement documents contain any references to the
+                        handover
+                        of wanted persons or the lifting of societal in-group protection (may be based
+                        on informal honour codes) of wanted persons from include formal state justice/security
+                        actors (police, security services, courts) and informal non-state justice actors
+                        (militias, revolutionary courts, shariah boards). Removal of social cover also refers
+                        to organisations committing to discipline their own (e.g. military or police).</span>
+                </label>
+            </form>
+        </div>
+
+        <button id="mini_refresh_button" title="Reset" style="top: 3px;"><i class="fa fa-refresh"></i></button>
+        <div id="info_title_div">
+            <h3>Filter by Year</h4>
+        </div>
+        <div id="main_timeline">
+            <p style="color: white; position: absolute; bottom: 5px; right: 5px; font-size: 10px;">Number of Agreements
+            </p>
+        </div>
+
+    </div>
+
+    <div class="legend">
+        <h5 id="filter_title" style="margin-bottom: 5px;">Filter by Stages</h5>
+
+        <div class="tooltip-container">
+            <div class="circle pre"></div>
+            <span class="stage_tooltip">Pre-negotiation</span>
+            <span class="tooltiptextlabel tooltiptextlabel1">
+                Agreements that aim to get parties to the point of negotiating over the incompatibilities at the heart
+                of the conflict.
+                Note that these agreements can happen at any time in a process (even after a comprehensive peace
+                agreement has been signed),
+                if parties have moved back into ‘talking about how they are going to talk’. Therefore, this value does
+                not imply temporal precedence.
+            </span>
+        </div>
+
+        <div class="tooltip-container">
+            <div class="circle cea"></div> <span>Ceasefire</span>
+            <span class="tooltiptextlabel tooltiptextlabel2">
+                This category contains agreements which provide in their entirety for a ceasefire, or association
+                demobilisation, or an agreement that is purely providing a monitoring arrangement for, or extension, of
+                a ceasefire.
+            </span>
+        </div>
+
+        <div class="tooltip-container">
+            <div class="circle par"></div> <span>Partial</span>
+            <span class="tooltiptextlabel tooltiptextlabel3">
+                Agreements that concern parties that are engaged in discussion and agreeing to substantive issues to
+                resolve the conflict, but only deal with some of the issues in ways that appear to contemplate future
+                agreements to complete.
+            </span>
+        </div>
+
+        <div class="tooltip-container">
+            <div class="circle imp"></div> <span>Implementation</span>
+            <span class="tooltiptextlabel tooltiptextlabel4">
+                Aiming to implement an earlier agreement. Note that this category does not include ceasefires.
+            </span>
+        </div>
+
+        <div class="tooltip-container">
+            <div class="circle oth"></div> <span>Other</span>
+            <span class="tooltiptextlabel tooltiptextlabel5">
+                This is a residual category, capturing all agreements that do not fit the remaining definition. The user
+                is advised to refer to the database for further information on the agreements in this category.
+            </span>
+        </div>
+        <button id="mini_refresh" title="Reset"><i class="fa fa-refresh"></i></button>
+
+    </div>
+
+
+    <script src="js/index.js"></script>
+</body>
+
+</html>
