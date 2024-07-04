@@ -125,18 +125,19 @@ h3 {
     background-color: black;
     padding: 4px;
     text-align: center;
+    font-size: 1.2em;
 }
 
 
 @media (max-width: 1450px) {
     h3 {
-        font-size: 14px;
+        font-size: 1.1em;
     }
 }
 
 @media (max-width: 1024px) {
     h3 {
-        font-size: 12px;
+        font-size: 1em;
     }
 }
 
@@ -177,18 +178,19 @@ h5 {
     margin-bottom: 5px;
     text-align: center;
     color: white;
+    font-size: 1em;
 }
 
 
 @media (max-width: 1450px) {
     h5 {
-        font-size: 12px;
+        font-size: 0.9em;
     }
 }
 
 @media (max-width: 1024px) {
     h5 {
-        font-size: 11px;
+        font-size: 0.8em;
     }
 }
 
@@ -417,6 +419,7 @@ pre {
 h1 {
     color: white;
     margin: auto;
+    font-size: 2em;
 }
 
 @media (max-width: 1450px) {
