@@ -369,7 +369,7 @@ Promise.all([
                             'Renewal',
                             '#fd8189',
                             'Other',
-                            '#34495e',
+                            '#c0de88',
                             'gray'
                         ]
                 }
@@ -494,7 +494,7 @@ Promise.all([
                             color_choice = '#fd8189'
                             break;
                         case "Other":
-                            color_choice = '#34495e'
+                            color_choice = '#c0de88'
                             break;
                         default:
                             color_choice = 'gray'
