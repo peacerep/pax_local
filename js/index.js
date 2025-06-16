@@ -240,7 +240,7 @@ $('#box4').click(function () {
 
 // load the data
 Promise.all([
-    d3.csv("data/local_v8_1.csv"),
+    d3.csv("data/pax_local_map_v9.csv"),
 ]).then(function (files) {
     let pax = files[0]
     console.log(pax);
