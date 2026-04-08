@@ -109,7 +109,7 @@ svg.append("g")
 
 //scales & axes for beeswarm timeline
 const x_scale = d3.scaleTime()
-    .range([0, width])
+    .range([0, width - 20])
 const y = d3.scaleLinear()
     .domain([0, 5])
     .range([height, 0]);
@@ -358,16 +358,18 @@ Promise.all([
                         [
                             'match',
                             ['get', 'stage'],
-                            'Pre-negotiation',
+                            'Pre-negotiation/process',
                             '#016099',
                             'Ceasefire',
                             '#df1f36',
                             'Framework-substantive, partial',
                             '#fd8189',
+                            'Framework-substantive, comprehensive',
+                            '#fdd900',
                             'Implementation',
                             '#3aae2a',
                             'Renewal',
-                            '#fd8189',
+                            '#7b8ad6',
                             'Other',
                             '#c0de88',
                             'gray'
@@ -478,7 +480,7 @@ Promise.all([
                 .style('fill', function (d) {
                     let color_choice;
                     switch (d[1][0][1][0].stage_label) {
-                        case "Pre-negotiation":
+                        case "Pre-negotiation/process":
                             color_choice = '#016099'
                             break;
                         case "Ceasefire":
@@ -487,11 +489,14 @@ Promise.all([
                         case "Framework-substantive, partial":
                             color_choice = '#fd8189'
                             break;
+                        case "Framework-substantive, comprehensive":
+                            color_choice = '#fdd900'
+                            break;
                         case "Implementation":
                             color_choice = '#3aae2a'
                             break;
                         case "Renewal":
-                            color_choice = '#fd8189'
+                            color_choice = '#7b8ad6'
                             break;
                         case "Other":
                             color_choice = '#c0de88'
@@ -740,7 +745,7 @@ Promise.all([
         d3.select(".pre").on("click", function () {
             refresh_filter();
             d3.select(this).style("border", "solid 1px")
-            map.setFilter('population', ['==', 'stage', "Pre-negotiation"]);
+            map.setFilter('population', ['==', 'stage', "Pre-negotiation/process"]);
         })
         d3.select(".cea").on("click", function () {
             refresh_filter();
@@ -751,6 +756,11 @@ Promise.all([
             refresh_filter();
             d3.select(this).style("border", "solid 1px")
             map.setFilter('population', ['==', 'stage', "Framework-substantive, partial"]);
+        })
+        d3.select(".com").on("click", function () {
+            refresh_filter();
+            d3.select(this).style("border", "solid 1px")
+            map.setFilter('population', ['==', 'stage', "Framework-substantive, comprehensive"]);
         })
         d3.select(".imp").on("click", function () {
             refresh_filter();
