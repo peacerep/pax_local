@@ -970,3 +970,9 @@ label:hover .tooltiptext {
     opacity: 1;
     left: 80%;
 }
+
+.tooltip-container:hover .tooltiptextlabel6 {
+    visibility: visible;
+    opacity: 1;
+    left: 80%;
+}

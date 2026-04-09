@@ -74,3 +74,4 @@ http://localhost:8000
 1. data updated
 2. made sure all say 'pre-negotiation/process' rather than just 'pre-negotiation'
 3. added substantive, comprehensive as there are now local SubComp agts
+4. 0,0 coordinates for Nepalese agreements: jittered them around central point in Nepal for the purposes of this map. 
